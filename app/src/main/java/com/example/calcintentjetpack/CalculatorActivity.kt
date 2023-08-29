@@ -27,7 +27,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode.Companion.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,8 +46,10 @@ class CalculatorActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Calc() {
-    var firstnum by remember { mutableStateOf("") }
-    var secondnum by remember { mutableStateOf("") }
+    var firstnum by remember { mutableStateOf(TextFieldValue("")) }
+    var secondnum by remember { mutableStateOf(TextFieldValue("")) }
+    var answer by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,7 +66,7 @@ fun Calc() {
         )
         Spacer(modifier = Modifier.height(100.dp))
         OutlinedTextField(
-            value = "First Number",
+            value = firstnum,
             label = { Text(text = "Enter First No",
                     color = androidx.compose.ui.graphics.Color.White,
                     fontSize = 30.sp)},
@@ -70,22 +74,33 @@ fun Calc() {
             onValueChange = {
                 firstnum = it
 
+
             } )
         Spacer(modifier = Modifier.height(50.dp))
         OutlinedTextField(
-            value = "Second Number",
+            value = secondnum,
             label = { Text(text = "Enter Second No",
                     color = androidx.compose.ui.graphics.Color.White,
                     fontSize = 30.sp)},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             onValueChange = {
-                        secondnum = it
+                secondnum = it
+
 
             })
         Spacer(modifier = Modifier.height(50.dp))
 
         OutlinedButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                var myfirstnum=firstnum.text.trim()
+                var mysecondnum =secondnum.text.trim()
+                if (myfirstnum.isEmpty() &&mysecondnum.isEmpty()) {
+                    answer = "Please fill in all details"
+                }else{
+                    var myanswer=myfirstnum.toDouble() + mysecondnum.toDouble()
+                    answer=myanswer.toString()
+                }
+            },
             colors = ButtonDefaults.buttonColors(androidx.compose.ui.graphics.Color.Blue),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.fillMaxWidth()
@@ -100,7 +115,17 @@ fun Calc() {
         Spacer(modifier = Modifier.height(50.dp))
 
         OutlinedButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                      var myfirstnum=firstnum.text.trim()
+                      var mysecondnum =secondnum.text.trim()
+                if (myfirstnum.isEmpty() &&mysecondnum.isEmpty()) {
+                    answer = "Please fill in all details"
+                }else{
+                    var myanswer=myfirstnum.toDouble() - mysecondnum.toDouble()
+                    answer=myanswer.toString()
+                }
+
+            },
             colors = ButtonDefaults.buttonColors(androidx.compose.ui.graphics.Color.Blue),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.fillMaxWidth()
@@ -114,7 +139,16 @@ fun Calc() {
         Spacer(modifier = Modifier.height(50.dp))
 
         OutlinedButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                var myfirstnum=firstnum.text.trim()
+                var mysecondnum =secondnum.text.trim()
+                if (myfirstnum.isEmpty() &&mysecondnum.isEmpty()) {
+                    answer = "Please fill in all details"
+                }else{
+                    var myanswer=myfirstnum.toDouble() * mysecondnum.toDouble()
+                    answer=myanswer.toString()
+                }
+            },
             colors = ButtonDefaults.buttonColors(androidx.compose.ui.graphics.Color.Blue),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.fillMaxWidth()
@@ -128,7 +162,16 @@ fun Calc() {
         Spacer(modifier = Modifier.height(50.dp))
 
         OutlinedButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                var myfirstnum=firstnum.text.trim()
+                var mysecondnum =secondnum.text.trim()
+                if (myfirstnum.isEmpty() &&mysecondnum.isEmpty()) {
+                    answer = "Please fill in all details"
+                }else{
+                    var myanswer=myfirstnum.toDouble() / mysecondnum.toDouble()
+                    answer=myanswer.toString()
+                }
+            },
             colors = ButtonDefaults.buttonColors(androidx.compose.ui.graphics.Color.Blue),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.fillMaxWidth()
